@@ -4,6 +4,7 @@ import 'package:chat_app/app/controller/home/bloc/home_bloc.dart';
 import 'package:chat_app/app/utils/agora/callpage.dart';
 import 'package:chat_app/app/utils/constants/notification.dart';
 import 'package:chat_app/app/view/chat/chat.dart';
+import 'package:chat_app/app/view/contacts/contacts.dart';
 import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/status/status.dart';
 import 'package:chat_app/app/view/util/styles/app_colors.dart';
@@ -27,6 +28,7 @@ class _HomeState extends State<Home> {
   List<Widget> screens = <Widget>[
     const Chats(),
     const Status(),
+     Contacts(),
     const Profile(),
   ];
   User? user = FirebaseAuth.instance.currentUser;
@@ -116,7 +118,8 @@ class _HomeState extends State<Home> {
   List<IconData> icondata = [
     Iconsax.messages_2,
     Ionicons.book_outline,
-    Ionicons.person_outline
+    Icons.contacts_outlined,
+    Ionicons.person_outline,
   ];
 
   @override
@@ -137,50 +140,41 @@ class _HomeState extends State<Home> {
                     topRight: Radius.circular(30),
                   ),
                 ),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: icondata.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                        homeBloc.add(TabChangeEvent(tabIndex: index));
-                      },
-                      child: SizedBox(
-                        height: 80,
-                        width: MediaQuery.sizeOf(context).width / 3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                icondata[index],
-                                color: index == selectedIndex
-                                    ? Colors.white
-                                    : AppColors.primaryDark,
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Container(
-                                height: 4,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                    color: index == selectedIndex
-                                        ? Colors.white
-                                        : AppColors.primaryColor,
-                                    borderRadius: BorderRadius.circular(30)),
-                              )
-                            ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(
+                    icondata.length,
+                    (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          homeBloc.add(TabChangeEvent(tabIndex: index));
+                        },
+                        child: SizedBox(
+                          height: 80,
+                          width: MediaQuery.of(context).size.width /
+                              icondata.length,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  icondata[index],
+                                  color: index == selectedIndex
+                                      ? Colors.white
+                                      : AppColors.primaryDark,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -190,6 +184,7 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
 
 
 

@@ -31,13 +31,15 @@ class RegisterButtonClickedEvent extends AuthEvent {
 class PickImageFromGalleryEvent extends AuthEvent {}
 
 class UpdateUserDataEvent extends AuthEvent {
-  final String uid;
+  // final String uid;
   final String name;
   final String email;
   final File imageUrl;
+  final String password;
 
   UpdateUserDataEvent({
-    required this.uid,
+    // required this.uid,
+    required this.password,
     required this.name,
     required this.email,
     required this.imageUrl,
@@ -45,5 +47,3 @@ class UpdateUserDataEvent extends AuthEvent {
 }
 
 class GoogleButtonClickedEvent extends AuthEvent {}
-
-

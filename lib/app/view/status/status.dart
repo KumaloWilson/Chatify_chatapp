@@ -22,16 +22,15 @@ class _StatusState extends State<Status> {
 
   @override
   Widget build(BuildContext context) {
-    String? image;
     User? user = FirebaseAuth.instance.currentUser;
     String name = '';
+    String? image;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            const SizedBox(
-              width: 8,
-            ),
+            const SizedBox(width: 8),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
@@ -53,22 +52,21 @@ class _StatusState extends State<Status> {
             ),
             const Spacer(),
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StatusTextPage(
-                        image: image,
-                        name: name,
-                        id: id,
-                      ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StatusTextPage(
+                      image: image,
+                      name: name,
+                      id: id,
                     ),
-                  );
-                },
-                icon: const Icon(Iconsax.story)),
-            const SizedBox(
-              width: 8,
-            )
+                  ),
+                );
+              },
+              icon: const Icon(Iconsax.story),
+            ),
+            const SizedBox(width: 8)
           ],
         ),
         body: BlocBuilder<StatusBloc, StatusState>(
@@ -78,6 +76,7 @@ class _StatusState extends State<Status> {
               image = state.imageUrl;
               name = state.name;
             }
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,14 +94,13 @@ class _StatusState extends State<Status> {
                   StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('status')
-                        .doc(user?.uid) // Checking the current user's status
+                        .doc(user?.uid)
                         .collection('status')
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final docs = snapshot.data!.docs;
                         if (docs.isNotEmpty) {
-                          // User has a story
                           final datas = docs.first;
                           final date = datas['timestamp'].toDate();
                           String formattedTime =
@@ -123,9 +121,9 @@ class _StatusState extends State<Status> {
                               child: Row(
                                 children: [
                                   StatusView(
-                                    unSeenColor: Colors.green,
+                                    unSeenColor: Colors.pink,
                                     seenColor: Colors.grey,
-                                    radius: 28,
+                                    radius: 30,
                                     centerImageUrl: image ?? '',
                                     numberOfStatus: docs.length,
                                   ),
@@ -155,7 +153,6 @@ class _StatusState extends State<Status> {
                           );
                         }
                       }
-                      // User doesn't have a story
                       return InkWell(
                         onTap: () {
                           Navigator.push(
@@ -192,23 +189,22 @@ class _StatusState extends State<Status> {
                                     ),
                                   ),
                                   Positioned(
-                                      bottom: 2,
-                                      right: -2,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle),
-                                        child: const Icon(
-                                          Iconsax.add_circle5,
-                                          color: Colors.black,
-                                        ),
-                                      )),
+                                    bottom: 2,
+                                    right: -2,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle),
+                                      child: const Icon(
+                                        Iconsax.add_circle5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              width: 25,
-                            ),
+                            const SizedBox(width: 25),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -222,7 +218,7 @@ class _StatusState extends State<Status> {
                                   "Tap to add status update",
                                   style: GoogleFonts.poppins(
                                       fontSize: 14, color: Colors.grey),
-                                )
+                                ),
                               ],
                             ),
                           ],
@@ -230,9 +226,7 @@ class _StatusState extends State<Status> {
                       );
                     },
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.only(left: 12, top: 8, bottom: 8),
                     child: Text(
@@ -243,9 +237,7 @@ class _StatusState extends State<Status> {
                           color: Colors.grey),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('status')
@@ -258,7 +250,6 @@ class _StatusState extends State<Status> {
                           itemCount: documents.length,
                           itemBuilder: (context, index) {
                             final data = documents[index];
-                            // Exclude the current user's story
                             if (data.id != user?.uid) {
                               id = data.id;
                               return StreamBuilder(
@@ -282,7 +273,8 @@ class _StatusState extends State<Status> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   StatusViewPage(
-                                                      id: data['uid']),
+                                                id: data['uid'],
+                                              ),
                                             ),
                                           );
                                         },
@@ -303,13 +295,13 @@ class _StatusState extends State<Status> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(data['name'],
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500)),
+                                                  Text(
+                                                    data['name'],
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                   Text(
                                                     formattedTime,
                                                     style: GoogleFonts.poppins(

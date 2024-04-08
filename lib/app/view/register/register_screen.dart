@@ -1,5 +1,6 @@
 import 'package:chat_app/app/controller/auth/bloc/auth_bloc.dart';
 import 'package:chat_app/app/utils/constants/validators.dart';
+import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/root/root.dart';
 import 'package:chat_app/app/view/upload/uploadimgae.dart';
 import 'package:flutter/material.dart';
@@ -30,20 +31,20 @@ class _SingUpScreenState extends State<SingUpScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => AuthenticationScreen(),
+              builder: (context) => const AuthenticationScreen(),
             ),
           );
         } else if (state is RegisteredSuccessState) {
-          String uid = state.uid;
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UploadProfile(
-                    uid: uid,
-                    email: _emailController.text,
-                    name: _nameController.text,
-                    password: _passController.text),
-              ));
+          // String uid = state.uid;
+          // Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => UploadProfile(
+          //           uid: uid,
+          //           email: _emailController.text,
+          //           name: _nameController.text,
+          //           password: _passController.text),
+          //     ));
         } else if (state is RegisteredErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
@@ -120,12 +121,20 @@ class _SingUpScreenState extends State<SingUpScreen> {
                               ),
                               onPressed: () async {
                                 if (fKey.currentState!.validate()) {
-                                  BlocProvider.of<AuthBloc>(context)
-                                      .add(RegisterButtonClickedEvent(
-                                    email: _emailController.text,
-                                    password: _passController.text,
-                                    name: _nameController.text,
-                                  ));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => UploadProfile(
+                                            name: _nameController.text,
+                                            email: _emailController.text,
+                                            password: _passController.text),
+                                      ));
+                                  // BlocProvider.of<AuthBloc>(context)
+                                  //     .add(RegisterButtonClickedEvent(
+                                  //   email: _emailController.text,
+                                  //   password: _passController.text,
+                                  //   name: _nameController.text,
+                                  // ));
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },

@@ -442,6 +442,9 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                                                   return Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         lastMessageTime!,
@@ -452,35 +455,11 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                                                                         .w500,
                                                                 color:
                                                                     Colors.grey,
-                                                                fontSize: 12),
+                                                                fontSize: 10),
                                                       ),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
-                                                      Container(
-                                                        height: 23,
-                                                        width: 23,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                color: Color(
-                                                                    0xFF5B17FE),
-                                                                shape: BoxShape
-                                                                    .circle),
-                                                        child: Center(
-                                                          child: Text(
-                                                            "2",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                          ),
-                                                        ),
-                                                      )
                                                     ],
                                                   );
                                                 } else {

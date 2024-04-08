@@ -107,17 +107,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+//while updatinng the user data i need to get the happend the authentication too
+
   FutureOr<void> updateUserDataEvent(
       UpdateUserDataEvent event, Emitter<AuthState> emit) async {
     final storageRef = FirebaseStorage.instance.ref();
     try {
+      UserCredential result = await firebaseAuth.createUserWithEmailAndPassword(
+          email: event.email, password: event.password);
+
+      user = result.user;
       // Upload profile image to Firebase Storage
       String imageUrl =
-          await uploadProfileImage(storageRef, event.uid, event.imageUrl);
+          await uploadProfileImage(storageRef, user!.uid, event.imageUrl);
 
       // Update user data in Firestore
       await updateUserDataInFirestore(
-          event.uid, event.name, event.email, imageUrl);
+          user!.uid, event.name, event.email, imageUrl);
 
       emit(UserDataUpdatedState());
     } catch (e) {

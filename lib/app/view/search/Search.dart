@@ -1,5 +1,7 @@
 import 'package:chat_app/app/view/chatScreen/chatScreen.dart';
+import 'package:chat_app/app/view/util/styles/app_colors.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/app/controller/search/bloc/search_bloc.dart';
@@ -28,6 +30,7 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
         toolbarHeight: 80,
         automaticallyImplyLeading: false,
@@ -39,6 +42,7 @@ class _SearchState extends State<Search> {
           icon: const Icon(
             Icons.arrow_back_ios,
             size: 24,
+            color: Colors.white,
           ),
         ),
       ),
@@ -62,90 +66,109 @@ class _SearchState extends State<Search> {
             searchResult = state.searchResult;
           }
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 23),
-                child: Text(
-                  "Search",
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(12, 26),
-                              blurRadius: 50,
-                              spreadRadius: 0,
-                              color: Colors.grey.withOpacity(.1),
-                            ),
-                          ],
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: TextField(
-                          controller: textEditingController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.blue, // Adjust icon color
-                            ),
-                            filled: true,
-                            fillColor: Color.fromARGB(255, 221, 220, 220),
-                            hintText: "Search...",
-                            hintStyle: TextStyle(
-                              color: Colors.black54, // Adjust hint text color
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 20.0,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none, // Remove border side
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none, // Remove border side
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide.none, // Remove border side
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
-                            ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 23),
+                        child: Text(
+                          "Search",
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(12, 26),
+                                      blurRadius: 50,
+                                      spreadRadius: 0,
+                                      color: Colors.grey.withOpacity(.1),
+                                    ),
+                                  ],
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: TextField(
+                                  controller: textEditingController,
+                                  decoration: const InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: Colors.blue, // Adjust icon color
+                                    ),
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(255, 221, 220, 220),
+                                    hintText: "Search...",
+                                    hintStyle: TextStyle(
+                                      color: Colors
+                                          .black54, // Adjust hint text color
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10.0,
+                                      horizontal: 20.0,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide.none, // Remove border side
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15.0),
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide.none, // Remove border side
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15.0),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide.none, // Remove border side
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              BlocProvider.of<SearchBloc>(context).add(
+                                PerformSearchEvent(textEditingController.text),
+                              );
+                            },
+                            icon: const Icon(EneftyIcons.search_status_outline),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: _buildSearchResultList(),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      BlocProvider.of<SearchBloc>(context).add(
-                        PerformSearchEvent(textEditingController.text),
-                      );
-                    },
-                    icon: const Icon(EneftyIcons.search_status_outline),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: _buildSearchResultList(),
+                ),
               ),
             ],
           );

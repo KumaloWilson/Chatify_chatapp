@@ -24,7 +24,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
   final String camera = 'camera';
   final String addStatus = 'addstatus';
   User? user = FirebaseAuth.instance.currentUser;
-  Color backgroundColor = Colors.white; // Store color in the state
+  Color backgroundColor = Colors.white;
   final datacontroller = TextEditingController();
 
   @override
@@ -105,14 +105,14 @@ class _StatusTextPageState extends State<StatusTextPage> {
                   'color': backgroundColor.value,
                   'timestamp': DateTime.now().toUtc(),
                 });
-                Future.delayed(const Duration(seconds: 30), () {
+                Future.delayed(const Duration(minutes: 2), () {
                   FirebaseFirestore.instance
                       .collection('status')
-                      .doc()
+                      .doc(user!.uid)
                       .collection('status')
                       .where('timestamp',
                           isLessThan: DateTime.now()
-                              .subtract(const Duration(seconds: 30)))
+                              .subtract(const Duration(minutes: 2)))
                       .get()
                       .then((QuerySnapshot querySnapshot) {
                     querySnapshot.docs.forEach((doc) {
@@ -160,8 +160,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
         },
         builder: (context, state) {
           if (state is ColorPickerState) {
-            backgroundColor =
-                state.color; // Update backgroundColor in the state
+            backgroundColor = state.color;
           }
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -199,13 +198,13 @@ class _StatusTextPageState extends State<StatusTextPage> {
 
   buildColorPicker() {
     return ColorPicker(
-      pickerColor: backgroundColor, // Use backgroundColor from state
+      pickerColor: backgroundColor,
       onColorChanged: (Color colors) {
         setState(() {
           BlocProvider.of<StatusBloc>(context)
               .add(ColorPickerEvent(color: colors));
           showImage = false;
-          backgroundColor = colors; // Update backgroundColor in the state
+          backgroundColor = colors;
         });
       },
     );
