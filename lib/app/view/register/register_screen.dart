@@ -4,9 +4,9 @@ import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/root/root.dart';
 import 'package:chat_app/app/view/upload/uploadimgae.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
-import 'package:chat_app/app/view/util/styles/fadeanimation.dart';
-import 'package:chat_app/app/view/util/styles/text_field_style.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/fadeanimation.dart';
+import 'package:chat_app/app/utils/animation/styles/text_field_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 

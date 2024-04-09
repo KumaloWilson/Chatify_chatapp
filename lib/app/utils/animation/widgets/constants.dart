@@ -1,4 +1,4 @@
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

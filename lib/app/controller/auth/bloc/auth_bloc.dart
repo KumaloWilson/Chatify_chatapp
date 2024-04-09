@@ -40,6 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> loginButtonClickedEvent(
       LoginButtonClickedEvent event, Emitter<AuthState> emit) async {
+    emit(LoginloadingState(loading: true));
     try {
       UserCredential result = await firebaseAuth.signInWithEmailAndPassword(
           email: event.email, password: event.password);

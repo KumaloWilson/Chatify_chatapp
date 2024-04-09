@@ -14,6 +14,13 @@ class LoginPageNavigateDoneState extends AuthActionState {}
 
 class LoggedInSuccessState extends AuthActionState {}
 
+class LoginloadingState extends AuthState {
+  final bool loading;
+  LoginloadingState({
+    required this.loading,
+  });
+}
+
 class LoggedInErrorState extends AuthActionState {
   final String error;
   LoggedInErrorState({

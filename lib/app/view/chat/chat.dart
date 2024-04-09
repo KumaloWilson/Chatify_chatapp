@@ -3,8 +3,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/app/utils/components/skelton.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
-import 'package:chat_app/app/view/util/widgets/scalefade_animation.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/widgets/scalefade_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,47 +24,13 @@ class Chats extends StatefulWidget {
   State<Chats> createState() => _ChatsState();
 }
 
-class _ChatsState extends State<Chats> with WidgetsBindingObserver {
+class _ChatsState extends State<Chats> {
   User? user = FirebaseAuth.instance.currentUser;
   String? lastMessageTime;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
     super.initState();
-    setStatus("Online");
-  }
-
-  void setStatus(String status) async {
-    try {
-      if (user != null) {
-        await FirebaseFirestore.instance
-            .collection('Users')
-            .doc(user!.uid)
-            .update({'status': status});
-      } else {
-        print('User is null, unable to update status.');
-      }
-    } catch (e) {
-      print('Error updating user status: $e');
-    }
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      //online
-      setStatus("Online");
-    } else {
-      //offline
-      setStatus("Offline");
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
   }
 
   @override
@@ -257,7 +223,11 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                             ],
                           ));
                         }
-                        return ListView.builder(
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => Divider(
+                            color: AppColors.primaryColor,
+                            thickness: 0.1,
+                          ),
                           padding: EdgeInsets.zero,
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, index) {
@@ -272,24 +242,24 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                                 if (snapshot.hasData) {
                                   var friend = snapshot.data;
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 6, right: 6),
                                     child: ScaleFadeAnimation(
                                       delay: index.toDouble(),
                                       child: Container(
                                         padding: const EdgeInsets.all(4),
                                         decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.1),
-                                            border: Border.all(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface
-                                                  .withOpacity(.0),
-                                              width: 0.5,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
+                                          color: Colors.white.withOpacity(0.1),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withOpacity(.0),
+                                            width: 0.5,
+                                          ),
+                                          // borderRadius:
+                                          //     BorderRadius.circular(30),
+                                        ),
                                         child: ListTile(
                                           onLongPress: () {
                                             showDialog(
@@ -328,8 +298,8 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                                             );
                                           },
                                           leading: SizedBox(
+                                            width: 60,
                                             height: 70,
-                                            width: 70,
                                             child: Stack(
                                               children: [
                                                 Positioned(
@@ -338,15 +308,15 @@ class _ChatsState extends State<Chats> with WidgetsBindingObserver {
                                                   left: 0,
                                                   right: 0,
                                                   child: Container(
-                                                    height: 70,
                                                     width: 70,
+                                                    height: 70,
                                                     clipBehavior:
                                                         Clip.antiAlias,
-                                                    decoration: const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    30))),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
                                                     child: friend['image'] !=
                                                             null
                                                         ? CachedNetworkImage(

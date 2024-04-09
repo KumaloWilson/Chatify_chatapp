@@ -1,7 +1,7 @@
 import 'package:chat_app/app/view/login/login_screen.dart';
 import 'package:chat_app/app/view/register/register_screen.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
-import 'package:chat_app/app/view/util/styles/custom_bg.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/custom_bg.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationScreen extends StatefulWidget {

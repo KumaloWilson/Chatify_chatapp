@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:awesome_widgets/awesome_widgets.dart';
 import 'package:chat_app/app/utils/constants/app_theme.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:chat_app/app/view/chatScreen/chatScreen.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +38,7 @@ class _SearchState extends State<Search> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            searchResult.clear();
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -63,6 +64,7 @@ class _SearchState extends State<Search> {
         },
         builder: (context, state) {
           if (state is SearchLoaded) {
+            searchResult.clear();
             searchResult = state.searchResult;
           }
           return Column(
@@ -198,7 +200,7 @@ class _SearchState extends State<Search> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListTile(
-                contentPadding: const EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(1),
                 leading: Container(
                   width: 50,
                   child: AspectRatio(
@@ -213,8 +215,14 @@ class _SearchState extends State<Search> {
                     ),
                   ),
                 ),
-                title: Text(searchResult[index]['name']),
-                subtitle: Text(searchResult[index]['email']),
+                title: Text(
+                  searchResult[index]['name'],
+                  style: GoogleFonts.poppins(),
+                ),
+                subtitle: Text(
+                  searchResult[index]['email'],
+                  style: GoogleFonts.poppins(),
+                ),
                 trailing: const Icon(Ionicons.chatbox_ellipses_outline),
               ),
             ),

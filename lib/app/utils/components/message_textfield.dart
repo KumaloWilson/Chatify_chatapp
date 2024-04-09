@@ -1,6 +1,6 @@
 import 'package:chat_app/app/controller/chat/bloc/chat_bloc.dart';
 import 'package:chat_app/app/utils/components/bottomsheet.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

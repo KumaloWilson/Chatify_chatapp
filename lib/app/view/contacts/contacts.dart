@@ -1,5 +1,6 @@
+import 'package:chat_app/app/utils/animation/styles/fadeanimation.dart';
 import 'package:chat_app/app/view/chatScreen/chatScreen.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,61 +97,64 @@ class _ContactsState extends State<Contacts> {
                       final data = snapshot.data!.docs[index];
                       return Padding(
                         padding: const EdgeInsets.only(top: 15),
-                        child: ListTile(
-                          leading: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
-                                    friendId: data['uid'],
-                                    friendName: data['name'],
-                                    friendImage: data['image'],
+                        child: FadeInAnimation(
+                          delay: 1.3,
+                          child: ListTile(
+                            leading: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      friendId: data['uid'],
+                                      friendName: data['name'],
+                                      friendImage: data['image'],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 55,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  image: DecorationImage(
+                                    image: NetworkImage(data['image']),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              );
-                            },
-                            child: Container(
-                              width: 55,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                  image: NetworkImage(data['image']),
-                                  fit: BoxFit.cover,
+                              ),
+                            ),
+                            title: Text(
+                              data['name'],
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                              ),
+                            ),
+                            subtitle: Text(
+                              data['email'],
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                              ),
+                            ),
+                            trailing: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.phone_circle_fill,
+                                  size: 35,
+                                  color: Color.fromARGB(255, 9, 48, 79),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 13,
+                                ),
+                                Icon(
+                                  CupertinoIcons.videocam_circle_fill,
+                                  size: 35,
+                                  color: Color.fromARGB(255, 9, 48, 79),
+                                ),
+                              ],
                             ),
-                          ),
-                          title: Text(
-                            data['name'],
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                            ),
-                          ),
-                          subtitle: Text(
-                            data['email'],
-                            style: GoogleFonts.poppins(
-                              fontSize: 12,
-                            ),
-                          ),
-                          trailing: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                CupertinoIcons.phone_circle_fill,
-                                size: 35,
-                                color: Color.fromARGB(255, 9, 48, 79),
-                              ),
-                              SizedBox(
-                                width: 13,
-                              ),
-                              Icon(
-                                CupertinoIcons.videocam_circle_fill,
-                                size: 35,
-                                color: Color.fromARGB(255, 9, 48, 79),
-                              ),
-                            ],
                           ),
                         ),
                       );

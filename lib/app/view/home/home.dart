@@ -7,7 +7,7 @@ import 'package:chat_app/app/view/chat/chat.dart';
 import 'package:chat_app/app/view/contacts/contacts.dart';
 import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/status/status.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   List<Widget> screens = <Widget>[
     const Chats(),
     const Status(),
-     Contacts(),
+    const Contacts(),
     const Profile(),
   ];
   User? user = FirebaseAuth.instance.currentUser;
@@ -166,8 +166,20 @@ class _HomeState extends State<Home> {
                                   icondata[index],
                                   color: index == selectedIndex
                                       ? Colors.white
-                                      : AppColors.primaryDark,
+                                      : AppColors.primaryHighContrast,
                                 ),
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                                Container(
+                                  height: 4,
+                                  width: 10,
+                                  decoration: BoxDecoration(
+                                      color: index == selectedIndex
+                                          ? Colors.white
+                                          : AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(30)),
+                                )
                               ],
                             ),
                           ),

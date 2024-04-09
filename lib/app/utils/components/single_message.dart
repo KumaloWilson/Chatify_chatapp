@@ -1,10 +1,12 @@
 // ignore_for_file: unnecessary_string_interpolations, prefer_typing_uninitialized_variables
 
 import 'package:chat_app/app/utils/components/showimage.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:custom_clippers/custom_clippers.dart';
 
 class SingleMessage extends StatefulWidget {
   final type;
@@ -35,35 +37,39 @@ class _SingleMessageState extends State<SingleMessage> {
               widget.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             Column(
-              // crossAxisAlignment: CrossAxisAlignment.end,
               crossAxisAlignment: widget.isMe
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
               children: [
                 widget.type == 'text'
-                    ? Container(
-                        padding: widget.isMe
-                            ? const EdgeInsets.only(
-                                top: 10, right: 14, left: 14, bottom: 10)
-                            : const EdgeInsets.only(
-                                top: 10, right: 14, left: 8, bottom: 4),
-                        margin: const EdgeInsets.only(
-                            top: 10, bottom: 2, left: 10, right: 10),
-                        constraints: const BoxConstraints(maxWidth: 200),
-                        decoration: BoxDecoration(
-                            color: widget.isMe ? color : Colors.transparent,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.zero)),
-                        child: Text(
-                          widget.message,
-                          style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: widget.isMe ? Colors.white : Colors.black),
-                        ))
+                    ? ClipPath(
+                        clipper: widget.isMe
+                            ? UpperNipMessageClipperTwo(MessageType.send)
+                            : UpperNipMessageClipperTwo(MessageType.receive),
+                        child: Container(
+                            padding: widget.isMe
+                                ? const EdgeInsets.only(
+                                    top: 5, left: 10, bottom: 5, right: 25)
+                                : const EdgeInsets.only(
+                                    top: 5, left: 25, bottom: 5, right: 10),
+                            constraints: const BoxConstraints(
+                                maxWidth: 280, minWidth: 80),
+                            decoration: BoxDecoration(
+                                color: widget.isMe
+                                    ? color
+                                    : AppColors.primaryColor,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12))),
+                            child: Text(
+                              widget.message,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: widget.isMe
+                                      ? Colors.white
+                                      : Colors.black),
+                            )),
+                      )
                     : Container(
                         child: widget.type == "link"
                             ? Container(
@@ -83,7 +89,7 @@ class _SingleMessageState extends State<SingleMessage> {
                                     color: widget.isMe
                                         ? const Color(0xFF5B17FE)
                                         // : Colors.blue.withOpacity(0.7),
-                                        : Colors.transparent,
+                                        : AppColors.primaryColor,
                                     borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(20),
                                         topRight: Radius.circular(20),
@@ -106,7 +112,8 @@ class _SingleMessageState extends State<SingleMessage> {
                                 ),
                               )
                             : Container(
-                                margin: EdgeInsets.only(right: 14, top: 10),
+                                margin:
+                                    const EdgeInsets.only(right: 14, top: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -162,7 +169,7 @@ class _SingleMessageState extends State<SingleMessage> {
                     lastMessageTime!,
                     style: GoogleFonts.poppins(
                         color: Colors.grey,
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.w400),
                   ),
                 )

@@ -1,8 +1,13 @@
+import 'dart:ui';
+
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/story_view.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class StatusViewPage extends StatelessWidget {
   const StatusViewPage({
@@ -33,14 +38,14 @@ class StatusViewPage extends StatelessWidget {
           final List<DocumentSnapshot> documents = snapshot.data!.docs;
 
           return StoryView(
-            indicatorForegroundColor: Colors.grey,
+            indicatorForegroundColor: AppColors.primaryColor,
             storyItems: List.generate(
               documents.length,
               (index) => StoryItem.text(
                 shown: true,
                 duration: const Duration(seconds: 3),
                 title: documents[index]['Data'],
-                textStyle: const TextStyle(fontSize: 18),
+                textStyle: GoogleFonts.poppins(fontSize: 18),
                 backgroundColor: Color(documents[index]['color']),
               ),
             ),
@@ -57,7 +62,8 @@ class StatusViewPage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            color: Colors.transparent.withOpacity(0.4),
+            // color: Colors.transparent,
+            color: Colors.transparent,
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('status')
@@ -75,18 +81,23 @@ class StatusViewPage extends StatelessWidget {
                 var userData = snapshot.data!.data() as Map<String, dynamic>;
                 var username = userData['name'];
                 var profileImageUrl = userData['image'];
+
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(profileImageUrl),
+                    radius: 25,
                   ),
                   title: Text(
                     username,
-                    style: const TextStyle(color: Colors.amber, fontSize: 15),
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                  subtitle: const Text(
-                    "4 hours ago",
-                    style: TextStyle(fontSize: 15, color: Colors.amber),
-                  ),
+                  // subtitle: Text(
+                  //   '4 hours',
+                  //   style: GoogleFonts.poppins(fontSize: 12),
+                  // ),
                 );
               },
             ),

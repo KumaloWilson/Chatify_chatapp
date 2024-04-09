@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   agora_rtc_engine
   awesome_notifications
   cloud_firestore
+  connectivity_plus
   emoji_picker_flutter
   file_selector_windows
   firebase_auth

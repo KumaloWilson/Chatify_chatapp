@@ -2,6 +2,7 @@
 // ignore_for_file: unrelated_type_equality_checks, camel_case_types
 import 'dart:io';
 import 'package:chat_app/app/utils/components/profilepageshimmer.dart';
+import 'package:chat_app/app/utils/components/showimage.dart';
 import 'package:chat_app/app/view/root/root.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _ProfileState extends State<Profile> {
   void generatecolor(String imageUrl) async {
     if (imageUrl != null) {
       try {
-        ImageProvider img = NetworkImage(imageUrl!);
+        ImageProvider img = NetworkImage(imageUrl);
         paletteGenerator = await PaletteGenerator.fromImageProvider(img);
         setState(() {});
       } catch (e) {
@@ -183,9 +184,20 @@ class _ProfileState extends State<Profile> {
                                               ),
                                             )
                                           : imageUrl != null
-                                              ? CircleAvatar(
-                                                  backgroundImage:
-                                                      NetworkImage(imageUrl!),
+                                              ? GestureDetector(
+                                                  onTap: () => Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ShowImage(
+                                                                imageUrl:
+                                                                    imageUrl!,
+                                                                message: ''),
+                                                      )),
+                                                  child: CircleAvatar(
+                                                    backgroundImage:
+                                                        NetworkImage(imageUrl!),
+                                                  ),
                                                 )
                                               : Padding(
                                                   padding: const EdgeInsets.all(

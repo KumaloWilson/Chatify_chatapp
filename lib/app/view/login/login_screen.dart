@@ -1,23 +1,21 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:chat_app/app/controller/auth/bloc/auth_bloc.dart';
 import 'package:chat_app/app/utils/components/continue_with.dart';
 import 'package:chat_app/app/utils/components/my_square_tile.dart';
-import 'package:chat_app/app/utils/constants/app_theme.dart';
 import 'package:chat_app/app/utils/constants/text_constants.dart';
 import 'package:chat_app/app/utils/constants/validators.dart';
 import 'package:chat_app/app/view/home/home.dart';
 import 'package:chat_app/app/view/root/root.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
-import 'package:chat_app/app/view/util/styles/fadeanimation.dart';
-import 'package:chat_app/app/view/util/styles/text_field_style.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/fadeanimation.dart';
+import 'package:chat_app/app/utils/animation/styles/text_field_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.controller});
@@ -30,6 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,84 @@ class _LoginScreenState extends State<LoginScreen> {
                 builder: (context) => Home(),
               ));
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Logged in successfully!")));
+            SnackBar(
+              content: Stack(
+                children: [
+                  Container(
+                    height: 90,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      color: AppColors.primaryColor,
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 48),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Success!",
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                              const Spacer(),
+                              Text(
+                                "Logged in successfully!",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12, color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(20)),
+                      child: SvgPicture.asset(
+                        'assets/images/bubbles.svg',
+                        height: 48,
+                        width: 40,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: -4,
+                    left: 0,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/images/back.svg",
+                          height: 40,
+                          color: Colors.red,
+                        ),
+                        Positioned(
+                          top: 10,
+                          child: SvgPicture.asset(
+                            "assets/images/failure.svg",
+                            height: 16,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              backgroundColor: Colors.transparent,
+              behavior: SnackBarBehavior.floating,
+              elevation: 0,
+            ),
+          );
         } else if (state is LoggedInErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
@@ -58,6 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(
                 builder: (context) => Home(),
               ));
+        } else if (state is LoginloadingState) {
+          setState(() {
+            isLoading = state.loading;
+          });
         }
       },
       child: Scaffold(
@@ -152,12 +233,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                   FocusManager.instance.primaryFocus?.unfocus();
                                 },
-                                child: Text(
-                                  "Sign In",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white),
-                                ),
+                                child: isLoading
+                                    ? const Center(
+                                        child: SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ))
+                                    : Text(
+                                        "Sign In",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
                               ),
                             ),
                             const SizedBox(
@@ -230,12 +320,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                             const Duration(milliseconds: 500),
                                         curve: Curves.ease);
                                   },
-                                  child: Text(TextConstants.register,
-                                      style: GoogleFonts.poppins(
-                                        color: AppColors.primaryHighContrast,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                      )),
+                                  child: Text(
+                                    TextConstants.register,
+                                    style: GoogleFonts.poppins(
+                                      color: AppColors.primaryHighContrast,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

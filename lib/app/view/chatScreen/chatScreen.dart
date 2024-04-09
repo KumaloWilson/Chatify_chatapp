@@ -4,7 +4,7 @@ import 'package:chat_app/app/controller/chat/bloc/chat_bloc.dart';
 import 'package:chat_app/app/utils/components/message_textfield.dart';
 import 'package:chat_app/app/utils/components/showimage.dart';
 import 'package:chat_app/app/utils/components/single_message.dart';
-import 'package:chat_app/app/view/util/styles/app_colors.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
