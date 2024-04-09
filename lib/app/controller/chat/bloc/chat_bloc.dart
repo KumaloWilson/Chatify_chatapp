@@ -21,8 +21,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<GalleryImagesSentEvent>(galleryImagesSentEvent);
     on<LocationSentEvent>(locationSentEvent);
     on<CameraImagesSentEvent>(cameraImagesSentEvent);
-     on<VideoCallButtonClickedEvent>(videoCallButtonClickedEvent);
-     on<ChattedFriendDeleteEvent>(chattedFriendDeleteEvent);
+    on<VideoCallButtonClickedEvent>(videoCallButtonClickedEvent);
+    on<ChattedFriendDeleteEvent>(chattedFriendDeleteEvent);
   }
 
   FutureOr<void> chatShareEvent(
@@ -134,14 +134,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .doc(event.currentId)
             .collection('messages')
             .doc(event.friendId)
-            .set({'last_msg': imageUrl});
+            .set({'last_msg': "photo"});
 
         FirebaseFirestore.instance
             .collection('Users')
             .doc(event.friendId)
             .collection('messages')
             .doc(event.currentId)
-            .set({'last_msg': imageUrl});
+            .set({'last_msg': "photo"});
 
         emit(ChatSuccess());
       }
@@ -301,7 +301,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-    FutureOr<void> videoCallButtonClickedEvent(
+  FutureOr<void> videoCallButtonClickedEvent(
       VideoCallButtonClickedEvent event, Emitter<ChatState> emit) async {
     try {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
@@ -315,7 +315,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
-   FutureOr<void> chattedFriendDeleteEvent(
+  FutureOr<void> chattedFriendDeleteEvent(
       ChattedFriendDeleteEvent event, Emitter<ChatState> emit) {
     try {
       FirebaseFirestore.instance

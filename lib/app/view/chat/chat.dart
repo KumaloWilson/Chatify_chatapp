@@ -15,6 +15,7 @@ import 'package:chat_app/app/view/chatScreen/chatScreen.dart';
 import 'package:chat_app/app/view/search/Search.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Chats extends StatefulWidget {
@@ -213,11 +214,12 @@ class _ChatsState extends State<Chats> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 32, vertical: 8),
                                 child: Text(
-                                    "Start your journey of connection. Build friendships,       share moments Stay connected with your friends. 🌟",
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                    )),
+                                  "Start your journey of connection. Build friendships,       share moments Stay connected with your friends. 🌟",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 10),
                             ],
@@ -379,13 +381,35 @@ class _ChatsState extends State<Chats> {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           subtitle: Container(
-                                            child: Text(
-                                              '$lastMsg',
-                                              style: GoogleFonts.archivo(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w500),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                            child: lastMsg == "photo"
+                                                ? Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.photo,
+                                                        color:
+                                                            AppColors.darkGrey,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        'photo',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 13,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : Text(
+                                                    '$lastMsg',
+                                                    style: GoogleFonts.archivo(
+                                                        color: Colors.grey,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                           ),
                                           trailing: StreamBuilder(
                                             stream: FirebaseFirestore.instance
