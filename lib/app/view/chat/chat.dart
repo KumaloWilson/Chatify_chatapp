@@ -340,35 +340,35 @@ class _ChatsState extends State<Chats> {
                                                           ),
                                                   ),
                                                 ),
-                                                Positioned(
-                                                  bottom: 2,
-                                                  right: 2,
-                                                  child: Container(
-                                                    height: 16,
-                                                    width: 16,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            color:
-                                                                Colors.white),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              2.0),
-                                                      child: Container(
-                                                        height: 14,
-                                                        width: 14,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: Colors
-                                                                    .green),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
+                                                // Positioned(
+                                                //   bottom: 2,
+                                                //   right: 2,
+                                                //   child: Container(
+                                                //     height: 16,
+                                                //     width: 16,
+                                                //     decoration:
+                                                //         const BoxDecoration(
+                                                //             shape:
+                                                //                 BoxShape.circle,
+                                                //             color:
+                                                //                 Colors.white),
+                                                //     child: Padding(
+                                                //       padding:
+                                                //           const EdgeInsets.all(
+                                                //               2.0),
+                                                //       child: Container(
+                                                //         height: 14,
+                                                //         width: 14,
+                                                //         decoration:
+                                                //             const BoxDecoration(
+                                                //                 shape: BoxShape
+                                                //                     .circle,
+                                                //                 color: Colors
+                                                //                     .green),
+                                                //       ),
+                                                //     ),
+                                                //   ),
+                                                // )
                                               ],
                                             ),
                                           ),
