@@ -129,6 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state is LoggedInErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
+          setState(() {
+            isLoading = false;
+          });
         } else if (state is GoogleButtonState) {
           Navigator.pushReplacement(
               context,

@@ -38,8 +38,8 @@ class OnBoardScreen extends StatelessWidget {
       subTitleTextStyle: GoogleFonts.poppins(
         fontSize: 18,
       ),
-      title: "Welcome to EchoChat!",
-      subTitle: "Your secrets are safe with us. EchoChat - where privacy meets",
+      title: "Welcome to Chatify!",
+      subTitle: "Your secrets are safe with us. Chatify - where privacy meets",
     ),
   ];
 
