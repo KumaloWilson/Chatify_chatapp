@@ -12,34 +12,34 @@ class OnBoardScreen extends StatelessWidget {
       imageUrl: 'assets/images/chatapp.gif',
       title: "Chat with Emojis and GIFs!",
       titleTextStyle: GoogleFonts.poppins(
-        fontSize: 16,
+        fontSize: 14,
       ),
       subTitleTextStyle: GoogleFonts.poppins(
-        fontSize: 18,
+        fontSize: 12,
       ),
-      subTitle: "Ping! Your friends are waiting. Keep chatting.",
+      subTitle: "Ping! Chat on!",
     ),
     Introduction(
       imageUrl: 'assets/images/plane-unscreen.gif',
       title: "Connect and Spread Good Vibes!",
       titleTextStyle: GoogleFonts.poppins(
-        fontSize: 16,
+        fontSize: 14,
       ),
       subTitleTextStyle: GoogleFonts.poppins(
-        fontSize: 18,
+        fontSize: 12,
       ),
-      subTitle: "Tap, type, talk! Let the chatting adventures begin.",
+      subTitle: "Tap, type, talk! Let's chat!",
     ),
     Introduction(
       imageUrl: 'assets/images/chat.gif',
       titleTextStyle: GoogleFonts.poppins(
-        fontSize: 16,
+        fontSize: 14,
       ),
       subTitleTextStyle: GoogleFonts.poppins(
-        fontSize: 18,
+        fontSize: 12,
       ),
       title: "Welcome to Chatify!",
-      subTitle: "Your secrets are safe with us. Chatify - where privacy meets",
+      subTitle: "Your secrets are safe with us. Chatify",
     ),
   ];
 

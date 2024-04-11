@@ -220,14 +220,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           .doc(event.currentId)
           .collection('messages')
           .doc(event.friendId)
-          .set({'last_msg': message});
+          .set({'last_msg': "location"});
 
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(event.friendId)
           .collection('messages')
           .doc(event.currentId)
-          .set({'last_msg': message});
+          .set({'last_msg': "location"});
     } catch (e) {
       print(e.toString());
     }

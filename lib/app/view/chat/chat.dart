@@ -383,9 +383,12 @@ class _ChatsState extends State<Chats> {
                                           subtitle: Container(
                                             child: lastMsg == "photo"
                                                 ? Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     children: [
                                                       Icon(
                                                         Icons.photo,
+                                                        size: 20,
                                                         color:
                                                             AppColors.darkGrey,
                                                       ),
@@ -401,15 +404,42 @@ class _ChatsState extends State<Chats> {
                                                       )
                                                     ],
                                                   )
-                                                : Text(
-                                                    '$lastMsg',
-                                                    style: GoogleFonts.archivo(
-                                                        color: Colors.grey,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
+                                                : lastMsg == "location"
+                                                    ? Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Icon(
+                                                            Ionicons.location,
+                                                            size: 20,
+                                                            color: AppColors
+                                                                .darkGrey,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            'location',
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 13,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )
+                                                    : Text(
+                                                        '$lastMsg',
+                                                        style:
+                                                            GoogleFonts.archivo(
+                                                                color:
+                                                                    Colors.grey,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
                                           ),
                                           trailing: StreamBuilder(
                                             stream: FirebaseFirestore.instance
