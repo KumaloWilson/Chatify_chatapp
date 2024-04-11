@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/story_view.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class StatusViewPage extends StatelessWidget {
   const StatusViewPage({

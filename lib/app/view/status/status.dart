@@ -1,5 +1,4 @@
 import 'package:chat_app/app/controller/status/bloc/status_bloc.dart';
-import 'package:chat_app/app/utils/components/showimage.dart';
 import 'package:chat_app/app/utils/components/statusTextPage.dart';
 import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 import 'package:status_view/status_view.dart';
 import '../statusView/statusview.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -328,12 +326,7 @@ class _StatusState extends State<Status> {
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
                               final documents = snapshot.data!.docs;
-                              return ListView.separated(
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    thickness: 0.07,
-                                  );
-                                },
+                              return ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: documents.length,
                                 itemBuilder: (context, index) {
@@ -370,7 +363,7 @@ class _StatusState extends State<Status> {
                                                 padding: const EdgeInsets.only(
                                                     left: 12,
                                                     top: 2,
-                                                    bottom: 13),
+                                                    bottom: 16),
                                                 child: Row(
                                                   children: [
                                                     StatusView(

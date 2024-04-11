@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, unnecessary_null_comparison, unused_local_variable
 // ignore_for_file: unrelated_type_equality_checks, camel_case_types
 import 'dart:io';
 import 'package:chat_app/app/utils/components/profilepageshimmer.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_null_comparison
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/app/controller/chat/bloc/chat_bloc.dart';
 import 'package:chat_app/app/utils/components/message_textfield.dart';
@@ -89,22 +89,33 @@ class _ChatScreenState extends State<ChatScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Delete Conversation'),
-                        content: const Text(
-                            'Are you sure you want to delete this Conversations?'),
+                        title: Text(
+                          'Delete Conversation',
+                          style: GoogleFonts.poppins(fontSize: 20),
+                        ),
+                        content: Text(
+                          'Are you sure you want to delete this Conversations?',
+                          style: GoogleFonts.poppins(),
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Cancel'),
+                            child: Text(
+                              'Cancel',
+                              style: GoogleFonts.poppins(),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
                               deleteConversation();
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Delete'),
+                            child: Text(
+                              'Delete',
+                              style: GoogleFonts.poppins(),
+                            ),
                           ),
                         ],
                       );
@@ -275,7 +286,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     padding: const EdgeInsets.all(4.0),
                                     child: CircleAvatar(
                                       backgroundImage:
-                                          NetworkImage(widget.friendImage!),
+                                          NetworkImage(widget.friendImage),
                                     )),
                               ),
                               const SizedBox(

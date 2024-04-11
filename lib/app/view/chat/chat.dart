@@ -215,7 +215,7 @@ class _ChatsState extends State<Chats> {
                                     horizontal: 32, vertical: 8),
                                 child: Text(
                                   "Start your journey of connection. Build friendships,       share moments Stay connected with your friends. 🌟",
-                                  style: GoogleFonts.poppins(
+                                  style: GoogleFonts.openSans(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
                                   ),
@@ -268,18 +268,27 @@ class _ChatsState extends State<Chats> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title:
-                                                      const Text('Delete Chat'),
-                                                  content: const Text(
-                                                      'Are you sure you want to delete this Chat?'),
+                                                  title: Text(
+                                                    'Delete Chat',
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 20),
+                                                  ),
+                                                  content: Text(
+                                                    'Are you sure you want to delete this Chat?',
+                                                    style:
+                                                        GoogleFonts.poppins(),
+                                                  ),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                       },
-                                                      child:
-                                                          const Text('Cancel'),
+                                                      child: Text(
+                                                        'Cancel',
+                                                        style: GoogleFonts
+                                                            .poppins(),
+                                                      ),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
@@ -291,8 +300,11 @@ class _ChatsState extends State<Chats> {
                                                                 friendId:
                                                                     friendId));
                                                       },
-                                                      child:
-                                                          const Text('Delete'),
+                                                      child: Text(
+                                                        'Delete',
+                                                        style: GoogleFonts
+                                                            .poppins(),
+                                                      ),
                                                     ),
                                                   ],
                                                 );

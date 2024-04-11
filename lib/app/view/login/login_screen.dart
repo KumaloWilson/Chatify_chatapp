@@ -3,6 +3,7 @@
 import 'package:chat_app/app/controller/auth/bloc/auth_bloc.dart';
 import 'package:chat_app/app/utils/components/continue_with.dart';
 import 'package:chat_app/app/utils/components/my_square_tile.dart';
+import 'package:chat_app/app/utils/components/snackbar.dart';
 import 'package:chat_app/app/utils/constants/text_constants.dart';
 import 'package:chat_app/app/utils/constants/validators.dart';
 import 'package:chat_app/app/view/home/home.dart';
@@ -14,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -47,85 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(
                 builder: (context) => Home(),
               ));
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Stack(
-                children: [
-                  Container(
-                    height: 90,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      color: AppColors.primaryColor,
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 48),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Success!",
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                              const Spacer(),
-                              Text(
-                                "Logged in successfully!",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12, color: Colors.white),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(20)),
-                      child: SvgPicture.asset(
-                        'assets/images/bubbles.svg',
-                        height: 48,
-                        width: 40,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: -4,
-                    left: 0,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/back.svg",
-                          height: 40,
-                          color: Colors.red,
-                        ),
-                        Positioned(
-                          top: 10,
-                          child: SvgPicture.asset(
-                            "assets/images/failure.svg",
-                            height: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              backgroundColor: Colors.transparent,
-              behavior: SnackBarBehavior.floating,
-              elevation: 0,
-            ),
-          );
+          showCustomSnackBar(context, "Success!", "Logged in successfully!");
         } else if (state is LoggedInErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
@@ -138,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(
                 builder: (context) => Home(),
               ));
+          showCustomSnackBar(context, "Success!", "Logged in successfully!");
         } else if (state is LoginloadingState) {
           setState(() {
             isLoading = state.loading;

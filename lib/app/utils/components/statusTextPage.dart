@@ -87,40 +87,49 @@ class _StatusTextPageState extends State<StatusTextPage> {
               shape: const CircleBorder(),
               backgroundColor: Colors.black,
               onPressed: () {
-                FirebaseFirestore.instance
-                    .collection('status')
-                    .doc(user!.uid)
-                    .set({
-                  "uid": user!.uid,
-                  'image': widget.image,
-                  'name': widget.name,
-                });
-                FirebaseFirestore.instance
-                    .collection('status')
-                    .doc(user!.uid)
-                    .collection('status')
-                    .doc()
-                    .set({
-                  "Data": datacontroller.text,
-                  'color': backgroundColor.value,
-                  'timestamp': DateTime.now().toUtc(),
-                });
-                Future.delayed(const Duration(minutes: 30), () {
+                // Check if the text field is empty
+                if (datacontroller.text.isNotEmpty) {
+                  FirebaseFirestore.instance
+                      .collection('status')
+                      .doc(user!.uid)
+                      .set({
+                    "uid": user!.uid,
+                    'image': widget.image,
+                    'name': widget.name,
+                  });
                   FirebaseFirestore.instance
                       .collection('status')
                       .doc(user!.uid)
                       .collection('status')
-                      .where('timestamp',
-                          isLessThan: DateTime.now()
-                              .subtract(const Duration(minutes: 30)))
-                      .get()
-                      .then((QuerySnapshot querySnapshot) {
-                    querySnapshot.docs.forEach((doc) {
-                      doc.reference.delete();
+                      .doc()
+                      .set({
+                    "Data": datacontroller.text,
+                    'color': backgroundColor.value,
+                    'timestamp': DateTime.now().toUtc(),
+                  });
+                  Future.delayed(const Duration(minutes: 30), () {
+                    FirebaseFirestore.instance
+                        .collection('status')
+                        .doc(user!.uid)
+                        .collection('status')
+                        .where('timestamp',
+                            isLessThan: DateTime.now()
+                                .subtract(const Duration(minutes: 30)))
+                        .get()
+                        .then((QuerySnapshot querySnapshot) {
+                      querySnapshot.docs.forEach((doc) {
+                        doc.reference.delete();
+                      });
                     });
                   });
-                });
-                Navigator.pop(context);
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please enter a status before sending.'),
+                    ),
+                  );
+                }
               },
               child: const Icon(
                 Icons.send,

@@ -1,6 +1,5 @@
 import 'package:chat_app/app/controller/auth/bloc/auth_bloc.dart';
 import 'package:chat_app/app/utils/constants/validators.dart';
-import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/root/root.dart';
 import 'package:chat_app/app/view/upload/uploadimgae.dart';
 import 'package:flutter/material.dart';
