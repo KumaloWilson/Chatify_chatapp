@@ -198,29 +198,23 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 100,
-                    child: Text(
-                      widget.friendName,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                          color: const Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Text(
-                    "Online",
-                    style: GoogleFonts.poppins(
-                        color: Colors.green,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600),
-                  )
-                ],
-              )
+              Expanded(
+                child: Text(
+                  widget.friendName,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                      color: const Color.fromRGBO(255, 255, 255, 1),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              // Text(
+              //   "Online",
+              //   style: GoogleFonts.poppins(
+              //       color: Colors.green,
+              //       fontSize: 12,
+              //       fontWeight: FontWeight.w600),
+              // )
             ],
           ),
         ),

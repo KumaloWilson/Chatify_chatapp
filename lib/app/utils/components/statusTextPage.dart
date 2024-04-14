@@ -1,3 +1,4 @@
+import 'package:chat_app/app/utils/components/dispalyImage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../controller/status/bloc/status_bloc.dart';
 
 class StatusTextPage extends StatefulWidget {
@@ -29,6 +31,7 @@ class _StatusTextPageState extends State<StatusTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -70,7 +73,30 @@ class _StatusTextPageState extends State<StatusTextPage> {
               heroTag: camera,
               backgroundColor: Colors.black,
               shape: const CircleBorder(),
-              onPressed: () {},
+              onPressed: () async {
+                final imagePicker = ImagePicker();
+                try {
+                  final pickedFile =
+                      await imagePicker.pickImage(source: ImageSource.gallery);
+
+                  if (pickedFile != null) {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => DisplayImageScreen(
+                    //         imagePath: pickedFile.path,
+                    //         userId: user!.uid,
+                    //         userName: userName,
+                    //         statusText: statusText),
+                    //   ),
+                    // );
+                  } else {
+                    // emit(ProfileImagePickedErrorState());
+                  }
+                } catch (e) {
+                  print(e.toString());
+                }
+              },
               child: const Center(
                 child: Icon(Icons.camera),
               ),
@@ -87,7 +113,6 @@ class _StatusTextPageState extends State<StatusTextPage> {
               shape: const CircleBorder(),
               backgroundColor: Colors.black,
               onPressed: () {
-                // Check if the text field is empty
                 if (datacontroller.text.isNotEmpty) {
                   FirebaseFirestore.instance
                       .collection('status')
