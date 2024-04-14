@@ -339,7 +339,11 @@ class _ChatsState extends State<Chats> {
                                                                 friend['image'],
                                                             placeholder: (conteext,
                                                                     url) =>
-                                                                const CircularProgressIndicator(),
+                                                                CircularProgressIndicator(
+                                                              color: AppColors
+                                                                  .primaryColor,
+                                                              strokeWidth: 3,
+                                                            ),
                                                             errorWidget:
                                                                 (context, url,
                                                                         error) =>
@@ -530,8 +534,10 @@ class _ChatsState extends State<Chats> {
                           },
                         );
                       }
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
                       );
                     },
                   ),
