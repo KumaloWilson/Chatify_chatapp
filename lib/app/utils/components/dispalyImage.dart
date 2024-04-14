@@ -2,22 +2,27 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 
-class DisplayImageScreen extends StatelessWidget {
+class DisplayImageScreen extends StatefulWidget {
   final String imagePath;
   final String userId;
   final String userName;
-  final String statusText;
 
   const DisplayImageScreen({
     required this.imagePath,
     required this.userId,
     required this.userName,
-    required this.statusText,
   });
 
+  @override
+  State<DisplayImageScreen> createState() => _DisplayImageScreenState();
+}
+
+class _DisplayImageScreenState extends State<DisplayImageScreen> {
+  bool isloading = false;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -30,18 +35,7 @@ class DisplayImageScreen extends StatelessWidget {
             color: Colors.black,
             child: Hero(
               tag: '',
-              child: Image.file(File(imagePath)),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 20,
-            child: FloatingActionButton(
-              backgroundColor: AppColors.primaryHighContrast,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Icon(CupertinoIcons.back),
+              child: Image.file(File(widget.imagePath)),
             ),
           ),
           Positioned(
@@ -49,28 +43,37 @@ class DisplayImageScreen extends StatelessWidget {
             right: 20,
             child: FloatingActionButton(
               backgroundColor: AppColors.primaryHighContrast,
-              onPressed: () {
-                FirebaseFirestore.instance
-                    .collection('status')
-                    .doc(userId)
-                    .set({
-                  "uid": userId,
-                  'image': imagePath,
-                  'name': userName,
+              onPressed: () async {
+                setState(() {
+                  isloading = true;
                 });
+                String imageUrl = await uploadImageToStorage(widget.imagePath);
+
                 FirebaseFirestore.instance
                     .collection('status')
-                    .doc(userId)
+                    .doc(widget.userId)
+                    .set({
+                  "uid": widget.userId,
+                  'image': imageUrl,
+                  'name': widget.userName,
+                  'dataType': 'image',
+                });
+
+                FirebaseFirestore.instance
+                    .collection('status')
+                    .doc(widget.userId)
                     .collection('status')
                     .doc()
                     .set({
-                  "Data": statusText,
+                  "Data": imageUrl,
+                  'dataType': 'image',
                   'timestamp': DateTime.now().toUtc(),
                 });
+
                 Future.delayed(const Duration(minutes: 30), () {
                   FirebaseFirestore.instance
                       .collection('status')
-                      .doc(userId)
+                      .doc(widget.userId)
                       .collection('status')
                       .where('timestamp',
                           isLessThan: DateTime.now()
@@ -82,13 +85,39 @@ class DisplayImageScreen extends StatelessWidget {
                     });
                   });
                 });
+
                 Navigator.pop(context);
               },
-              child: Icon(EneftyIcons.send_2_outline),
+              child: isloading
+                  ? SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                    )
+                  : Icon(EneftyIcons.send_2_outline),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<String> uploadImageToStorage(String imagePath) async {
+    File file = File(imagePath);
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('images')
+        .child('$fileName.jpg');
+
+    firebase_storage.UploadTask task = ref.putFile(file);
+
+    await task.whenComplete(() => null);
+
+    String downloadUrl = await ref.getDownloadURL();
+    return downloadUrl;
   }
 }

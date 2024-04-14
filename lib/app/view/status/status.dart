@@ -68,33 +68,8 @@ class _StatusState extends State<Status> {
                         Row(
                           children: [
                             const SizedBox(
-                              width: 40,
+                              width: 30,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(4.0),
-                            //   child: Container(
-                            //     height: 40,
-                            //     width: 40,
-                            //     decoration: BoxDecoration(
-                            //       color: Colors.black,
-                            //       shape: BoxShape.circle,
-                            //     ),
-                            //     child: GestureDetector(
-                            //       onTap: () => Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //             builder: (context) => ShowImage(
-                            //                 imageUrl: image!, message: ''),
-                            //           )),
-                            //       child: CircleAvatar(
-                            //         backgroundImage: NetworkImage(
-                            //             image!), // Use user's image URL
-                            //         backgroundColor: Colors
-                            //             .transparent, // Ensure transparent background
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             const Spacer(),
                             Text(
                               "Stories",

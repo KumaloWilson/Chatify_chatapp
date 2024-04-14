@@ -80,16 +80,16 @@ class _StatusTextPageState extends State<StatusTextPage> {
                       await imagePicker.pickImage(source: ImageSource.gallery);
 
                   if (pickedFile != null) {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => DisplayImageScreen(
-                    //         imagePath: pickedFile.path,
-                    //         userId: user!.uid,
-                    //         userName: userName,
-                    //         statusText: statusText),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DisplayImageScreen(
+                          imagePath: pickedFile.path,
+                          userId: user!.uid,
+                          userName: widget.name,
+                        ),
+                      ),
+                    );
                   } else {
                     // emit(ProfileImagePickedErrorState());
                   }

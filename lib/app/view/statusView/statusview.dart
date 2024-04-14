@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -40,13 +39,27 @@ class StatusViewPage extends StatelessWidget {
             indicatorForegroundColor: AppColors.primaryColor,
             storyItems: List.generate(
               documents.length,
-              (index) => StoryItem.text(
-                shown: true,
-                duration: const Duration(seconds: 3),
-                title: documents[index]['Data'],
-                textStyle: GoogleFonts.poppins(fontSize: 18),
-                backgroundColor: Color(documents[index]['color']),
-              ),
+              (index) {
+                final Map<String, dynamic> data =
+                    documents[index].data() as Map<String, dynamic>;
+                final String dataType = data['dataType'] ?? '';
+                if (dataType == "image") {
+                  return StoryItem.inlineImage(
+                    url: data['Data'],
+                    controller: StoryController(),
+                  );
+                } else {
+                  return StoryItem.text(
+                    shown: true,
+                    duration: const Duration(seconds: 3),
+                    title: data['Data'],
+                    textStyle: GoogleFonts.poppins(fontSize: 18),
+                    backgroundColor: Color(
+                      documents[index]['color'],
+                    ),
+                  );
+                }
+              },
             ),
             onComplete: () {
               Navigator.pop(context);
@@ -61,7 +74,6 @@ class StatusViewPage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            // color: Colors.transparent,
             color: Colors.transparent,
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -87,16 +99,12 @@ class StatusViewPage extends StatelessWidget {
                     radius: 25,
                   ),
                   title: Text(
-                    username,
+                    username ?? '',
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  // subtitle: Text(
-                  //   '4 hours',
-                  //   style: GoogleFonts.poppins(fontSize: 12),
-                  // ),
                 );
               },
             ),
