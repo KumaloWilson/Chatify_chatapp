@@ -98,7 +98,7 @@ class _ContactsState extends State<Contacts> {
                       return Padding(
                         padding: const EdgeInsets.only(top: 15),
                         child: FadeInAnimation(
-                          delay: 1.3,
+                          delay: 1.5,
                           child: ListTile(
                             leading: InkWell(
                               onTap: () {

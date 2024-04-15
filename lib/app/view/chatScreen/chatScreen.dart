@@ -34,6 +34,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   User? user = FirebaseAuth.instance.currentUser;
 
+  bool deletingMessages = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ChatBloc, ChatState>(
@@ -108,14 +110,29 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {
-                              deleteConversation();
+                            onPressed: () async {
+                              setState(() {
+                                deletingMessages = true;
+                              });
+                              await deleteConversation();
+
+                              setState(() {
+                                deletingMessages = false;
+                              });
                               Navigator.of(context).pop();
                             },
-                            child: Text(
-                              'Delete',
-                              style: GoogleFonts.poppins(),
-                            ),
+                            child: deletingMessages
+                                ? SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  )
+                                : Text(
+                                    'Delete',
+                                    style: GoogleFonts.poppins(),
+                                  ),
                           ),
                         ],
                       );
@@ -361,7 +378,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void deleteConversation() async {
+  Future<void> deleteConversation() async {
     try {
       // Get a reference to the collection
       CollectionReference<Map<String, dynamic>> collectionReference =

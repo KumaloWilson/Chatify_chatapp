@@ -245,7 +245,7 @@ class _ChatsState extends State<Chats> {
                                   var friend = snapshot.data;
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 10, left: 6, right: 6),
+                                        top: 6, left: 6, right: 6),
                                     child: ScaleFadeAnimation(
                                       delay: index.toDouble(),
                                       child: Container(

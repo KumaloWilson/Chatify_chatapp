@@ -9,8 +9,10 @@ import 'package:chat_app/app/view/profile/profile.dart';
 import 'package:chat_app/app/view/status/status.dart';
 import 'package:chat_app/app/utils/animation/styles/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -117,9 +119,9 @@ class _HomeState extends State<Home> {
   int selectedIndex = 0;
   List<IconData> icondata = [
     Iconsax.messages_2,
-    Ionicons.book_outline,
-    Icons.contacts_outlined,
-    Ionicons.person_outline,
+    Iconsax.story,
+    EneftyIcons.people_outline,
+    CupertinoIcons.person,
   ];
 
   @override

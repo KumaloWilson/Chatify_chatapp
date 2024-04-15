@@ -70,14 +70,14 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
                   'timestamp': DateTime.now().toUtc(),
                 });
 
-                Future.delayed(const Duration(minutes: 30), () {
+                Future.delayed(const Duration(hours: 24), () {
                   FirebaseFirestore.instance
                       .collection('status')
                       .doc(widget.userId)
                       .collection('status')
                       .where('timestamp',
                           isLessThan: DateTime.now()
-                              .subtract(const Duration(minutes: 30)))
+                              .subtract(const Duration(hours: 24)))
                       .get()
                       .then((QuerySnapshot querySnapshot) {
                     querySnapshot.docs.forEach((doc) {
@@ -85,7 +85,6 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
                     });
                   });
                 });
-
                 Navigator.pop(context);
               },
               child: isloading
